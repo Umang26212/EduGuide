@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>
+        <%= college.name %> | EduGuide
+    </title>
+
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+
+    <%- include("../partials/navbar.ejs") %>
+
+        <main class="college-details-page">
+
+            <!-- College Header -->
+            <section class="college-header">
+
+                <p class="eyebrow">COLLEGE PROFILE</p>
+
+                <h1>
+                    <%= college.name %>
+                </h1>
+
+                <div class="college-info-row">
+
+                    <div class="college-info-item">
+                        <span>📍 Location</span>
+                        <strong>
+                            <%= college.location %>
+                        </strong>
+                    </div>
+
+                    <div class="college-info-item">
+                        <span>🏛️ Type</span>
+                        <strong>
+                            <%= college.collegeType %>
+                        </strong>
+                    </div>
+
+                    <div class="college-info-item">
+                        <span>💰 Annual Fees</span>
+                        <strong>
+                            ₹<%= college.fees.toLocaleString("en-IN") %>
+                        </strong>
+                    </div>
+
+                    <div class="college-info-item">
+                        <span>🏠 Hostel</span>
+                        <strong>
+                            <%= college.hostelAvailable ? "Available" : "Not Available" %>
+                        </strong>
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- About -->
+            <section class="college-section">
+
+                <h2>About the College</h2>
+
+                <p>
+                    <%= college.description %>
+                </p>
+
+            </section>
+
+
+            <!-- Courses -->
+            <section class="college-section">
+
+                <h2>Popular Courses</h2>
+
+                <ul>
+                    <% college.courses.forEach(course=> { %>
+
+                        <li>
+                            <%= course %>
+                        </li>
+
+                        <% }) %>
+                </ul>
+
+            </section>
+
+
+            <!-- Entrance Exams -->
+            <section class="college-section">
+
+                <h2>Entrance Exams</h2>
+
+                <ul>
+                    <% college.entranceExams.forEach(exam=> { %>
+
+                        <li>
+                            <%= exam %>
+                        </li>
+
+                        <% }) %>
+                </ul>
+
+            </section>
+
+
+            <!-- Hostel -->
+            <!-- Fees & Hostel -->
+            <section class="college-section">
+
+                <h2>Fees & Campus</h2>
+
+                <p>
+                    Annual Fees:
+                    <strong>
+                        ₹<%= college.fees.toLocaleString("en-IN") %>
+                    </strong>
+                </p>
+
+                <p>
+                    Hostel Available:
+                    <strong>
+                        <%= college.hostelAvailable ? "Yes" : "No" %>
+                    </strong>
+                </p>
+
+            </section>
+
+
+            <!-- Useful Links -->
+            <section class="college-section">
+
+                <h2>Useful Links</h2>
+
+                <div class="college-links">
+
+                    <% if (college.website) { %>
+
+                        <a href="<%= college.website %>" target="_blank">
+                            Official Website
+                        </a>
+
+                        <% } %>
+
+
+                            <% if (college.admissionLink) { %>
+
+                                <a href="<%= college.admissionLink %>" target="_blank">
+                                    Admission Information
+                                </a>
+
+                                <% } %>
+
+                </div>
+
+            </section>
+            <section class="college-action-section">
+
+                <button type="button" class="compare-btn" data-college-id="<%= college._id %>">
+                    Compare This College
+                </button>
+
+                <a href="/colleges" class="back-colleges-button">
+                    Back to Colleges
+                </a>
+
+            </section>
+
+        </main>
+        <script src="/js/script.js"></script>
+
+</body>
+
+</html>

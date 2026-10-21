@@ -1,0 +1,67 @@
+<%- include("../partials/navbar") %>
+<link rel="stylesheet" href="/css/style.css">
+
+<div class="scholarships-page">
+
+    <div class="scholarships-header">
+
+        <h1>Scholarships</h1>
+
+        <p>
+            Explore scholarship opportunities that can help support
+            your higher education journey.
+        </p>
+
+    </div>
+
+
+    <div class="scholarship-grid">
+
+        <% scholarships.forEach(scholarship => { %>
+
+            <div class="scholarship-card">
+
+                <span class="scholarship-label">
+                    Scholarship
+                </span>
+
+                <h2>
+                    <%= scholarship.name %>
+                </h2>
+
+                <p>
+                    <strong>Provider:</strong>
+                    <%= scholarship.provider %>
+                </p>
+
+                <p>
+                    <strong>Eligibility:</strong>
+                    <%= scholarship.eligibility %>
+                </p>
+
+                <p>
+                    <strong>Amount:</strong>
+                    <%= scholarship.amount %>
+                </p>
+
+                <p>
+                    <strong>Deadline:</strong>
+                    <%= scholarship.deadline %>
+                </p>
+
+                <a
+                    href="<%= scholarship.link %>"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="scholarship-button"
+                >
+                    View Official Details →
+                </a>
+
+            </div>
+
+        <% }) %>
+
+    </div>
+
+</div>

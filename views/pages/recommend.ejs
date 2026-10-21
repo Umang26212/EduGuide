@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Find Your College - EduGuide</title>
+
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+
+    <%- include("../partials/navbar") %>
+
+        <main>
+
+            <h1>Find Your College</h1>
+            <p class="recommendation-intro">
+                Tell us your preferences and EduGuide will find colleges that match your needs.
+            </p>
+            <div class="ai-recommendation-section">
+
+                <h2>✨ Find Colleges with AI</h2>
+
+                <p>
+                    Describe what you are looking for in your own words.
+                    EduGuide AI will understand your preferences and find matching colleges.
+                </p>
+                <p class="ai-how-it-works">
+                    🤖 Powered by AI + your college database
+                </p>
+                <textarea id="aiMessage"
+                    placeholder="Example: I want to study Computer Science in Delhi. My budget is around 1 lakh and I need hostel accommodation."
+                    rows="4"></textarea>
+
+                <button type="button" id="aiRecommendButton">
+                    Find Colleges with AI
+                </button>
+                
+
+                <div id="aiResult"></div>
+
+            </div>
+            <div class="recommendation-divider">
+                <span>OR</span>
+            </div>
+            <div class="traditional-recommendation-section">
+
+                <div class="traditional-heading">
+                    <span>🔎</span>
+                    <div>
+                        <h2>Find Colleges Yourself</h2>
+                        <p>Prefer choosing your requirements manually? Select your preferences below.</p>
+                    </div>
+                </div>
+
+                <form action="/recommend" method="GET" class="recommendation-form">
+
+                    <label>Course</label>
+                    <select name="course">
+                        <option value="">Any Course</option>
+
+                        <% allCourses.forEach(courseName=> { %>
+                            <option value="<%= courseName %>" <%=course===courseName ? "selected" : "" %>
+                                >
+                                <%= courseName %>
+                            </option>
+                            <% }) %>
+                    </select>
+                    <label>Preferred Location</label>
+                    <select name="location">
+                        <option value="">Any Location</option>
+
+                        <% allLocations.forEach(locationName=> { %>
+                            <option value="<%= locationName %>" <%=location===locationName ? "selected" : "" %>
+                                >
+                                <%= locationName %>
+                            </option>
+                            <% }) %>
+                    </select>
+                    <label>Annual Fee Budget</label>
+
+                    <select name="budget">
+                        <option value="">Any Budget</option>
+
+                        <option value="80000">Up to ₹80,000</option>
+                        <option value="100000">Up to ₹1,00,000</option>
+                        <option value="150000">Up to ₹1,50,000</option>
+                    </select>
+                    <label>Hostel Requirement</label>
+
+                    <select name="hostel">
+                        <option value="">Any</option>
+                        <option value="yes">Hostel Required</option>
+                        <option value="no">Hostel Not Required</option>
+                    </select>
+                    <label>College Type</label>
+
+                    <select name="collegeType">
+                        <option value="">Any Type</option>
+
+                        <option value="Public Technical Institute" <%=collegeType==="Public Technical Institute"
+                            ? "selected" : "" %>
+                            >
+                            Public Technical Institute
+                        </option>
+
+                        <option value="Private" <%=collegeType==="Private" ? "selected" : "" %>
+                            >
+                            Private
+                        </option>
+                    </select>
+
+                    <button type="submit" class="recommendation-button">
+                        Find Colleges
+                    </button>
+
+                </form>
+                <% if ( typeof colleges !=="undefined" && (course || location || budget || hostel || collegeType) ) { %>
+                    <h2 class="recommendation-results-title">
+                        Colleges Recommended For You
+                    </h2>
+                    <p class="recommendation-results-intro">
+                        These colleges are ranked based on how closely they match your selected preferences.
+                    </p>
+
+                    <% if (recommendedColleges && recommendedColleges.length> 0) { %>
+
+                        <% recommendedColleges.forEach(item=> { %>
+
+                            <% const college=item.college; %>
+
+                                <div class="recommendation-card">
+
+                                    <h3>
+                                        <%= college.name %>
+                                    </h3>
+
+                                    <p>
+                                        Location: <%= college.location %>
+                                    </p>
+
+                                    <p>
+                                        Type: <%= college.collegeType %>
+                                    </p>
+                                    <div class="recommendation-courses">
+
+                                        <strong>Courses:</strong>
+
+                                        <ul>
+                                            <% college.courses.forEach(course=> { %>
+                                                <li>
+                                                    <%= course %>
+                                                </li>
+                                                <% }) %>
+                                        </ul>
+
+                                    </div>
+                                    <p>
+                                        Entrance Exams:
+                                        <%= college.entranceExams.join(", ") %>
+                                </p>
+                                <p>
+    Hostel:
+    <%= college.hostelAvailable ? " Available" : "Not Available" %>
+                                    </p>
+                                    <p>
+                                        Fees: ₹<%= college.fees.toLocaleString("en-IN") %> per year
+                                    </p>
+                                    <a href="/colleges/<%= college._id %>" class="view-college-button">
+                                        View College
+                                    </a>
+                                    <% if (college.admissionLink) { %>
+
+                                        <a href="<%= college.admissionLink %>" target="_blank">
+                                            Admission Details
+                                        </a>
+
+                                        <% } %>
+
+                                            <div class="recommendation-match">
+
+                                                <strong>
+                                                    <%= item.matchLevel %>
+                                                </strong>
+                                                <span>
+                                                    <%= item.percentage %>% Match
+                                                </span>
+
+
+
+                                            </div>
+                                            <% if (item.matches.length> 0) { %>
+
+                                                <div class="recommendation-reasons">
+
+                                                    <h4>Why this college matches you</h4>
+
+                                                    <ul>
+                                                        <% item.matches.forEach(match=> { %>
+
+                                                            <li>
+                                                                ✓ <%= match %> preference matches
+                                                            </li>
+
+                                                            <% }) %>
+                                                    </ul>
+
+                                                </div>
+
+                                                <% } %>
+
+                                </div>
+
+
+                                <% }) %>
+
+                                    <% } else { %>
+
+                                        <p>No colleges found matching your preferences.</p>
+
+                                        <% } %>
+
+                                            <% } %>
+
+        </main>
+
+        <script>
+            const aiButton = document.getElementById("aiRecommendButton");
+            const aiMessage = document.getElementById("aiMessage");
+            const aiResult = document.getElementById("aiResult");
+            
+            aiButton.addEventListener("click", async () => {
+
+                const message = aiMessage.value.trim();
+                
+                if (!message) {
+                    aiResult.innerHTML = "<p>Please describe what you are looking for.</p>";
+                    return;
+                }
+
+                aiButton.disabled = true;
+                aiButton.innerText = "Finding colleges...";
+
+                try {
+
+                    const response = await fetch("/colleges/ai-recommend", {
+                        method: "POST",
+
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify({
+                            message: message
+                        })
+                    });
+
+                    const data = await response.json();
+                    if (!response.ok || !data.success) {
+                        aiResult.innerHTML = `
+        <div class="no-ai-results">
+            <h3>Unable to Find Recommendations</h3>
+            <p>${data.message || "Something went wrong. Please try again."}</p>
+        </div>
+    `;
+                        return;
+                    }
+                    const hasPreferences =
+                        data.preferences.course ||
+                        data.preferences.location ||
+                        data.preferences.budget ||
+                        data.preferences.hostel ||
+                        data.preferences.collegeType;
+
+                    if (!hasPreferences) {
+                        aiResult.innerHTML = `
+        <div class="no-ai-results">
+            <h3>Tell Us What You're Looking For</h3>
+            <p>
+                Try mentioning a course, location, budget, or hostel requirement
+                so EduGuide can find suitable colleges for you.
+            </p>
+        </div>
+    `;
+                        return;
+                    }
+
+
+                    console.log("AI response:", data);
+
+                    aiResult.innerHTML = `
+    <h3>AI Recommendations</h3>
+
+<div class="ai-understood-heading">
+    <span>✨</span>
+    <strong>Here's what EduGuide understood</strong>
+</div>
+
+<div class="ai-preference-chips">
+
+    <span class="ai-chip">
+        💻 ${data.preferences.course || "Any Course"}
+    </span>
+
+    <span class="ai-chip">
+        📍 ${data.preferences.location || "Any Location"}
+    </span>
+
+    <span class="ai-chip">
+        💰 ${data.preferences.budget
+                            ? "₹" + data.preferences.budget.toLocaleString("en-IN")
+                            : "Any Budget"}
+    </span>
+
+    <span class="ai-chip">
+        🏠 ${data.preferences.hostel === "yes"
+                            ? "Hostel Required"
+                            : data.preferences.hostel === "no"
+                                ? "Hostel Not Required"
+                                : "Any Hostel"}
+    </span>
+    <span class="ai-chip">
+    🏛️ ${data.preferences.collegeType || "Any College Type"}
+</span>
+
+</div>
+
+    ${data.recommendedColleges.length > 0 ? `
+    <h3>Matching Colleges</h3>
+
+    ${data.recommendedColleges.map(item => `
+        <div class="recommendation-card">
+
+            <h3>${item.college.name}</h3>
+
+            <p>
+                Location: ${item.college.location}
+            </p>
+
+            <p>
+                Type: ${item.college.collegeType}
+            </p>
+
+            <p>
+                Fees: ₹${item.college.fees.toLocaleString("en-IN")} per year
+            </p>
+
+            <p>
+                Hostel:
+                ${item.college.hostelAvailable ? "Available" : "Not Available"}
+            </p>
+
+            <div class="recommendation-match">
+    <strong>${item.matchLevel}</strong>
+    <span>${item.percentage}% Match</span>
+</div>
+
+
+<div class="recommendation-reasons">
+    <h4>Why this college matches you</h4>
+
+    <ul>
+        ${(item.matches || []).map(match => `
+            <li class="reason-match">✓ ${match}</li>
+        `).join("")}
+
+        ${(item.mismatches || []).map(reason => `
+            <li class="reason-mismatch">⚠ ${reason}</li>
+        `).join("")}
+
+        ${(!item.matches || item.matches.length === 0) &&
+          (!item.mismatches || item.mismatches.length === 0) ? `
+            <li>Not enough preference details to explain this match.</li>
+        ` : ""}
+    </ul>
+</div>
+
+
+
+
+            <a
+                href="/colleges/${item.college._id}"
+                class="view-college-button"
+            >
+                View College
+            </a>
+
+        </div>
+        `).join("")}
+` : `
+    <div class="no-ai-results">
+        <h3>No Colleges Found</h3>
+        <p>
+            No colleges match all your requirements.
+            Try changing your preferences or increasing your budget.
+        </p>
+    </div>
+`}
+`;
+
+                } catch (error) {
+
+                    console.error(error);
+
+                    aiResult.innerHTML =
+                        "<p>Something went wrong. Please try again.</p>";
+
+                } finally {
+
+                    aiButton.disabled = false;
+                    aiButton.innerText = "Find Colleges with AI";
+
+                }
+
+            });
+           
+
+        </script>
+</body>
+
+</html>

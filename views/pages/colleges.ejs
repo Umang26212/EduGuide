@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Colleges | EduGuide</title>
+
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+
+    <%- include("../partials/navbar") %>
+        <main class="colleges-page">
+
+            <div class="page-heading">
+                <p class="eyebrow">DISCOVER YOUR FUTURE</p>
+
+                <h1>Explore Colleges</h1>
+
+                <p>
+                    Find colleges that match your goals, interests and career plans.
+                </p>
+
+                <form class="college-search" action="/colleges" method="GET">
+
+                    <input type="text" name="search" placeholder="Search by college name..."
+                        value="<%= search || '' %>">
+
+
+                    <select name="location">
+                        <option value="">All Locations</option>
+
+                        <% allLocations.forEach(locationName=> { %>
+                            <option value="<%= locationName %>" <%=location===locationName ? "selected" : "" %>
+                                >
+                                <%= locationName %>
+                            </option>
+                            <% }) %>
+                    </select>
+
+                    <select name="collegeType">
+
+                        <option value="">All Types</option>
+                        <option value="Public Technical Institute" <%=collegeType==="Public Technical Institute"
+                            ? "selected" : "" %>>
+                            Public Technical Institute
+                        </option>
+
+                        <option value="Private University" <%=collegeType==="Private University" ? "selected" : "" %>>
+                            Private University
+                        </option>
+
+                        <option value="Government College" <%=collegeType==="Government College" ? "selected" : "" %>>
+                            Government College
+                        </option>
+
+                    </select>
+
+                    <select name="course">
+                        <option value="">All Courses</option>
+
+                        <% allCourses.forEach(courseName=> { %>
+
+                            <option value="<%= courseName %>" <%=course===courseName ? "selected" : "" %>>
+                                <%= courseName %>
+                            </option>
+
+                            <% }) %>
+                    </select>
+                    <select name="sort">
+                        <option value="">Sort By</option>
+
+                        <option value="az" <%=sort==="az" ? "selected" : "" %>>
+                            Name: A → Z
+                        </option>
+
+                        <option value="za" <%=sort==="za" ? "selected" : "" %>>
+                            Name: Z → A
+                        </option>
+                    </select>
+
+                    <button type="submit">
+                        Search
+                    </button>
+
+                </form>
+            </div>
+
+
+            <div class="results-summary">
+                <div>
+                    <span class="results-label">YOUR SEARCH RESULTS</span>
+                    <p>Explore your options and find the right fit.</p>
+                </div>
+
+                <div class="results-count">
+                    <strong>
+                        <%= colleges.length %>
+                    </strong>
+                    <span>
+                        <%= colleges.length===1 ? "College found" : "Colleges found" %>
+                    </span>
+                </div>
+            </div>
+
+            <% if (colleges.length> 0) { %>
+
+
+                <div class="college-grid">
+
+                    <% colleges.forEach(college=> { %>
+
+                        <a href="/colleges/<%= college._id %>" class="college-card">
+
+                            <div class="college-card-content">
+
+                                <h2>
+                                    <%= college.name %>
+                                </h2>
+
+                                <p class="college-location">
+                                    📍 <%= college.location %>
+                                </p>
+
+                                <% if (college.description) { %>
+                                    <p class="college-description">
+                                        <%= college.description %>
+                                    </p>
+                                    <% } %>
+
+                                        <span class="view-college">
+                                            View College →
+                                        </span>
+
+                                        <div class="college-card-actions">
+                                            <button type="button" class="compare-btn"
+                                                data-college-id="<%= college._id %>">
+                                                Compare
+                                            </button>
+
+                                            <button type="button" class="shortlist-btn"
+                                                data-college-id="<%= college._id %>"
+                                                data-college-name="<%= college.name %>"
+                                                data-college-location="<%= college.location %>"
+                                                data-college-url="/colleges/<%= college._id %>">
+                                                ♡ Save College
+                                            </button>
+                                        </div>
+
+                            </div>
+
+                        </a>
+
+                        <% }) %>
+
+                </div>
+
+                <% } else { %>
+
+                    <div class="no-results">
+                        <h2>No colleges found</h2>
+                        <p>Try changing your search or filters.</p>
+                    </div>
+
+                    <% } %>
+
+        </main>
+        <div id="compare-bar" class="compare-bar">
+            <span id="compare-count">0 colleges selected</span>
+
+            <button type="button" id="compare-now">
+                Compare Now
+            </button>
+        </div>
+
+        <script src="/js/script.js"></script>
+
+</body>
+
+</html>

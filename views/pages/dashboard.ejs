@@ -1,0 +1,255 @@
+<link rel="stylesheet" href="/css/style.css">
+<%- include("../partials/navbar.ejs") %>
+
+    <div class="student-dashboard-v2">
+
+        <section class="student-welcome">
+            <div class="welcome-copy">
+                <span class="student-eyebrow">YOUR COLLEGE JOURNEY STARTS HERE</span>
+                <h1>Make your next step count.</h1>
+                <p>
+                    Explore colleges, discover courses, compare your options,
+                    and find information to help you make a confident decision.
+                </p>
+
+                <form action="/colleges" method="GET" class="student-search">
+                    <span>🔎</span>
+                    <input type="text" name="search" placeholder="Search colleges by name..."
+                        aria-label="Search colleges by name">
+                    <button type="submit">Find Colleges</button>
+                </form>
+
+                <div class="welcome-links">
+                    <a href="/colleges">Browse all colleges</a>
+                    <span>·</span>
+                    <a href="/courses">Explore courses</a>
+                </div>
+            </div>
+
+            <div class="welcome-illustration" aria-hidden="true">
+                <div class="illustration-circle">
+                    <span>🎓</span>
+                </div>
+                <div class="illustration-note">
+                    <strong>Explore your future</strong>
+                    <small>One informed choice at a time</small>
+                </div>
+            </div>
+        </section>
+
+        <section class="student-section">
+            <div class="student-section-heading">
+                <div>
+                    <span class="student-eyebrow">YOUR NEXT STEPS</span>
+                    <h2>What would you like help with?</h2>
+                    <p>Start with the task that matters most to you.</p>
+                </div>
+            </div>
+
+            <div class="student-task-grid">
+
+                <a href="/recommend" class="student-task-card">
+                    <div class="task-icon task-icon-red">✨</div>
+                    <span class="task-step">01 · DISCOVER</span>
+                    <h3>Find suitable colleges</h3>
+                    <p>
+                        Use your preferences to discover colleges that may
+                        fit your educational goals.
+                    </p>
+                    <strong>Get recommendations <span>→</span></strong>
+                </a>
+
+                <a href="/colleges" class="student-task-card">
+                    <div class="task-icon task-icon-blue">⚖️</div>
+                    <span class="task-step">02 · EVALUATE</span>
+                    <h3>Compare your options</h3>
+                    <p>
+                        Review college information side by side before
+                        deciding which options to consider.
+                    </p>
+                    <strong>Explore and compare <span>→</span></strong>
+                </a>
+
+                <a href="/courses" class="student-task-card">
+                    <div class="task-icon task-icon-purple">📚</div>
+                    <span class="task-step">03 · CHOOSE</span>
+                    <h3>Explore courses</h3>
+                    <p>
+                        Discover available courses and find colleges
+                        offering subjects that interest you.
+                    </p>
+                    <strong>Browse courses <span>→</span></strong>
+                </a>
+
+                <a href="/scholarships" class="student-task-card">
+                    <div class="task-icon task-icon-green">🎓</div>
+                    <span class="task-step">04 · FUND</span>
+                    <h3>Look for scholarships</h3>
+                    <p>
+                        Explore scholarship information that may help
+                        you plan for education expenses.
+                    </p>
+                    <strong>Explore scholarships <span>→</span></strong>
+                </a>
+
+            </div>
+        </section>
+
+
+        <section class="student-planning-panel">
+            <div class="planning-intro">
+                <span class="student-eyebrow">A PRACTICAL CHECKLIST</span>
+                <h2>Before choosing a college</h2>
+                <p>
+                    Track your progress as you research colleges and make
+                    informed decisions about your education.
+                </p>
+
+                <div class="planning-progress">
+                    <div class="planning-progress-info">
+                        <span>Your planning progress</span>
+                        <strong id="planning-progress-text">0 of 4 completed</strong>
+                    </div>
+
+                    <div class="planning-progress-track" role="progressbar" aria-label="College planning progress"
+                        aria-valuemin="0" aria-valuemax="4" aria-valuenow="0" id="planning-progress-bar">
+                        <div id="planning-progress-fill"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="planning-list">
+
+                <div class="planning-item">
+                    <input type="checkbox" class="planning-checkbox" id="planning-course" data-planning-task="course">
+
+                    <div>
+                        <label for="planning-course">
+                            <h3>Does it offer your preferred course?</h3>
+                        </label>
+                        <p>Check available courses and academic information.</p>
+                    </div>
+
+                    <a href="/courses" aria-label="Explore courses">→</a>
+                </div>
+
+                <div class="planning-item">
+                    <input type="checkbox" class="planning-checkbox" id="planning-cost" data-planning-task="cost">
+
+                    <div>
+                        <label for="planning-cost">
+                            <h3>Can you plan for the total cost?</h3>
+                        </label>
+                        <p>Review available fee information and scholarships.</p>
+                    </div>
+
+                    <a href="/scholarships" aria-label="Explore scholarships">→</a>
+                </div>
+
+                <div class="planning-item">
+                    <input type="checkbox" class="planning-checkbox" id="planning-admission"
+                        data-planning-task="admission">
+
+                    <div>
+                        <label for="planning-admission">
+                            <h3>What are the admission requirements?</h3>
+                        </label>
+                        <p>Check entrance exams and official admission resources.</p>
+                    </div>
+
+                    <a href="/colleges" aria-label="Explore college details">→</a>
+                </div>
+
+                <div class="planning-item">
+                    <input type="checkbox" class="planning-checkbox" id="planning-compare" data-planning-task="compare">
+
+                    <div>
+                        <label for="planning-compare">
+                            <h3>Which colleges are worth comparing?</h3>
+                        </label>
+                        <p>Review your options before making a shortlist.</p>
+                    </div>
+
+                    <a href="/colleges" aria-label="Compare colleges">→</a>
+                </div>
+
+            </div>
+        </section>
+
+
+
+        <section class="student-shortlist-section">
+            <div class="student-section-heading">
+                <div>
+                    <span class="student-eyebrow">YOUR SAVED OPTIONS</span>
+                    <h2>My College Shortlist</h2>
+                    <p>Keep track of colleges you may want to consider.</p>
+                </div>
+
+                <span class="shortlist-count">
+                    <span id="shortlist-total">0</span> saved
+                </span>
+            </div>
+
+            <div id="shortlist-container"></div>
+
+            <p id="shortlist-message" class="shortlist-message" aria-live="polite"></p>
+
+            <a href="/colleges" class="shortlist-browse-link">
+                + Explore colleges to add to your shortlist
+            </a>
+        </section>
+
+
+        <section class="student-data-section">
+            <div class="student-section-heading">
+                <div>
+                    <span class="student-eyebrow">EDUGUIDE DIRECTORY</span>
+                    <h2>Explore what's available</h2>
+                    <p>Current coverage in the EduGuide college database.</p>
+                </div>
+                <a href="/colleges" class="student-text-link">View colleges →</a>
+            </div>
+
+            <div class="student-data-grid">
+                <div class="student-data-card">
+                    <span>🎓</span>
+                    <div>
+                        <strong>
+                            <%= totalColleges %>
+                        </strong>
+                        <p>Colleges listed</p>
+                    </div>
+                </div>
+
+                <div class="student-data-card">
+                    <span>📚</span>
+                    <div>
+                        <strong>
+                            <%= totalCourses %>
+                        </strong>
+                        <p>Unique course names</p>
+                    </div>
+                </div>
+
+                <div class="student-data-card">
+                    <span>📍</span>
+                    <div>
+                        <strong>
+                            <%= totalLocations %>
+                        </strong>
+                        <p>Locations represented</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <footer class="student-dashboard-footer">
+            <p>
+                Make informed choices. Always verify admission requirements,
+                fees, and deadlines with the official college website.
+            </p>
+        </footer>
+
+    </div>
+    <script src="/js/script.js"></script>

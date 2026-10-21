@@ -1,0 +1,50 @@
+<%- include("../partials/navbar") %>
+<link rel="stylesheet" href="/css/style.css">
+
+<div class="courses-page">
+
+    <div class="courses-header">
+
+        <h1>Explore Courses</h1>
+
+        <p>
+            Discover courses available across colleges on EduGuide
+            and find colleges offering the course you're interested in.
+        </p>
+
+    </div>
+
+
+    <div class="course-grid">
+
+        <% courses.forEach(course => { %>
+
+            <div class="course-card">
+
+                <div class="course-icon">
+                    🎓
+                </div>
+
+                <h3>
+                    <%= course %>
+                </h3>
+
+                <p>
+                    Explore colleges offering this course.
+                </p>
+
+                <a
+                    href="/colleges?course=<%= encodeURIComponent(course) %>"
+                    class="course-button"
+                >
+                    Find Colleges →
+                </a>
+
+            </div>
+
+        <% }) %>
+
+    </div>
+
+</div>
+

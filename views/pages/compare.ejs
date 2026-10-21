@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Compare Colleges - EduGuide</title>
+
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+
+    <%- include("../partials/navbar") %>
+
+        <main>
+
+            <h1>Compare Colleges</h1>
+            <a href="/colleges" class="back-colleges">
+                ← Back to Colleges
+            </a>
+
+            <div class="comparison-table">
+
+                <div class="comparison-row comparison-header">
+
+                    <div class="comparison-label">
+                        Details
+                    </div>
+
+                    <% colleges.forEach(college=> { %>
+
+                        <div class="comparison-college">
+                            <h2>
+                                <%= college.name %>
+                            </h2>
+                        </div>
+
+                        <% }) %>
+
+                </div>
+
+
+                <div class="comparison-row">
+
+                    <div class="comparison-label">
+                        Location
+                    </div>
+
+                    <% colleges.forEach(college=> { %>
+
+                        <div class="comparison-value">
+                            <%= college.location %>
+                        </div>
+
+                        <% }) %>
+
+                </div>
+
+
+                <div class="comparison-row">
+
+                    <div class="comparison-label">
+                        College Type
+                    </div>
+
+                    <% colleges.forEach(college=> { %>
+
+                        <div class="comparison-value">
+                            <%= college.collegeType %>
+                        </div>
+
+                        <% }) %>
+
+                </div>
+
+
+                <div class="comparison-row">
+
+                    <div class="comparison-label">
+                        Entrance Exams
+                    </div>
+
+                    <% colleges.forEach(college=> { %>
+
+                        <div class="comparison-value">
+                            <%= college.entranceExams.join(", ") %>
+                    </div>
+
+                <% }) %>
+
+            </div>
+
+
+            <div class=" comparison-row">
+
+                                <div class="comparison-label">
+                                    Hostel
+                                </div>
+
+                                <% colleges.forEach(college=> { %>
+
+                                    <div class="comparison-value">
+                                        <%= college.hostelAvailable ? "Available" : "Not Available" %>
+                                    </div>
+
+                                    <% }) %>
+
+                        </div>
+
+
+                        <div class="comparison-row">
+
+                            <div class="comparison-label">
+                                Courses
+                            </div>
+
+                            <% colleges.forEach(college=> { %>
+
+                                <div class="comparison-value">
+
+                                    <ul>
+                                        <% college.courses.forEach(course=> { %>
+
+                                            <li>
+                                                <%= course %>
+                                            </li>
+
+                                            <% }) %>
+                                    </ul>
+
+                                </div>
+
+                                <% }) %>
+
+                        </div>
+
+                </div>
+
+        </main>
+
+</body>
+
+</html>
